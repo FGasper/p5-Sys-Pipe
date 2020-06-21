@@ -40,11 +40,11 @@ See L<pipe2(2)> for more details.
 =head2 $success_yn = pipe( READHANDLE, WRITEHANDLE [, FLAGS] )
 
 A drop-in replacement for Perl’s C<pipe()> built-in that optionally
-accepts a numeric I<FLAGS> argument. See your system’s C<pipe2>
+accepts a numeric I<FLAGS> argument. See your system’s L<pipe2(2)>
 documentation for what values you can pass in there.
 
-Note that if I<FLAGS> is nonzero on any system (e.g., macOS) that doesn’t
-support C<pipe2()> an exception is thrown.
+Note that if I<FLAGS> is nonzero on any system (e.g., macOS) that
+lacks C<pipe2()> an exception is thrown.
 
 =cut
 

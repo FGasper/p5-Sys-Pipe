@@ -10,7 +10,7 @@ WriteMakefile(
     INC => '-Wall -I.',
 
     PREREQ_PM => {
-
+        'XSLoader' => 0.24,
     },
 
     TEST_REQUIRES => {
