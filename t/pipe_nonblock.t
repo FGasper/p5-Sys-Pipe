@@ -18,10 +18,7 @@ SKIP: {
         skip "No pipe2 support? $@", 1;
     };
 
-    sysread($r, my $buf, 512);
-    my $err = 0 + $!;
-
-    is( $err, Errno::EAGAIN(), '$! as expected with non-blocking pipe' );
+    ok( !$r->blocking(), 'non-blocking from the get-go' );
 }
 
 done_testing();
