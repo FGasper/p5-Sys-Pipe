@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <stdbool.h>
+
 // For now depend on Perl’s HAS_PIPE2
 
 //#include "ppport.h"
@@ -45,7 +47,7 @@ int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
     int ret = pipe2(fds, flags);
 #elif defined(HAS_PIPE)
     if (flags != 0) {
-        croak("This system lacks pipe2 support, so pipe() cannot accept flags.", flags);
+        croak("This system lacks pipe2 support, so pipe() cannot accept flags.");
     }
 
     int ret = pipe(fds);
