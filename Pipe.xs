@@ -40,7 +40,7 @@ static inline void _fd2sv( pTHX_ int fd, bool is_read, SV* sv ) {
     IoOFP(io) = pio;
 }
 
-int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
+int _sp_pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
     int fds[2];
 
 #ifdef HAS_PIPE2
@@ -81,7 +81,7 @@ PROTOTYPES: DISABLE
 SV*
 pipe( SV *infh, SV *outfh, int flags = 0 )
     CODE:
-        if (_pipe(aTHX_ infh, outfh, flags)) {
+        if (_sp_pipe(aTHX_ infh, outfh, flags)) {
             RETVAL = &PL_sv_undef;
         }
         else {
