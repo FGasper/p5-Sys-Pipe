@@ -19,11 +19,27 @@ Ever wish you could create a pipe that starts out non-blocking?
 Linux and a number of other modern OSes can do this via the C<pipe2()>
 system call; this little library exposes that functionality.
 
+=head1 WHAT’S THE POINT OF THIS?
+
+As shown above, this exposes the ability to create a pipe that starts
+out non-blocking. If that’s all you need, then the gain here is mostly just
+tidiness. It I<is> also faster than doing:
+
+    pipe my $r, my $w or die "pipe: $!";
+    $r->blocking(0);
+    $w->blocking(0);
+
+… but the above is already quite fast, so that seems unlikely to make a
+real-world difference.
+
+In Linux, this also exposes the ability to create a “packet mode” pipe.
+See L<pipe2(2)> for more details.
+
 =head1 FUNCTIONS
 
 =head2 $success_yn = pipe( READHANDLE, WRITEHANDLE [, FLAGS] )
 
-A mostly-drop-in replacement for Perl’s C<pipe()> built-in that optionally
+A drop-in replacement for Perl’s C<pipe()> built-in that optionally
 accepts a numeric I<FLAGS> argument. See your system’s C<pipe2>
 documentation for what values you can pass in there.
 

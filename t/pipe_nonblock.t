@@ -19,7 +19,7 @@ SKIP: {
     };
 
     sysread($r, my $buf, 512);
-    my $err = $!;
+    my $err = 0 + $!;
 
     is( $err, Errno::EAGAIN(), '$! as expected with non-blocking pipe' );
 }
