@@ -17,7 +17,7 @@ static inline char* _cur_pkgname( pTHX ) {
     COP* mycop = PL_curcop;
 
     // This macro may not be part of the API … but PL_curstash doesn’t
-    // work with: perl -e'package Foo; _print_pl_curstash()', whereas
+    // work with “perl -e'package Foo; _print_pl_curstash()'”, whereas
     // PL_curcop does.
     HV* myhv = (HV*)CopSTASH(mycop);
 
@@ -39,16 +39,26 @@ static inline void _fd2sv( pTHX_ int fd, bool is_read, SV* sv ) {
 }
 
 int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
-#ifdef HAS_PIPE
     int fds[2];
 
-    // int ret = pipe2(fds, flags);
+#ifdef HAS_PIPE2
+    int ret = pipe2(fds, flags);
+#elif defined(HAS_PIPE)
+    if (flags != 0) {
+        croak("This system lacks pipe2 support, so pipe() cannot accept flags.", flags);
+    }
+
     int ret = pipe(fds);
+#else
+    croak("This system lacks pipe support!");
+#endif
 
     if (!ret) {
+/*
         if (fds[0] > PL_maxsysfd) {
-            fcntl(fds[0], F_SETFD, O_CLOEXEC);
+            fcntl(fds[0], F_SETFD, FD_CLOEXEC);
         }
+*/
         // Perl_setfd_cloexec_for_nonsysfd(fds[0]);
         // Perl_setfd_cloexec_for_nonsysfd(fds[1]);
 
@@ -57,9 +67,6 @@ int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
     }
 
     return ret;
-#else
-    die("No pipe2");
-#endif
 }
 
 //----------------------------------------------------------------------
@@ -67,15 +74,16 @@ int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
 
 MODULE = Sys::Pipe          PACKAGE = Sys::Pipe
 
-int
+SV*
 pipe( SV *infh, SV *outfh, int flags = 0 )
     CODE:
-        RETVAL = _pipe(aTHX_ infh, outfh, flags);
+        if (_pipe(aTHX_ infh, outfh, flags)) {
+            RETVAL = &PL_sv_undef;
+        }
+        else {
+            RETVAL = newSVuv(1);
+        }
 
     OUTPUT:
         RETVAL
 
-void
-print_PL_maxsysfd()
-    CODE:
-        fprintf(stdout, "%d\n", PL_maxsysfd);
