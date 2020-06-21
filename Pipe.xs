@@ -76,6 +76,8 @@ int _pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
 
 MODULE = Sys::Pipe          PACKAGE = Sys::Pipe
 
+PROTOTYPES: DISABLE
+
 SV*
 pipe( SV *infh, SV *outfh, int flags = 0 )
     CODE:
