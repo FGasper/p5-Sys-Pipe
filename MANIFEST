@@ -1,0 +1,8 @@
+.gitignore
+.travis.yml
+LICENSE
+Makefile.PL
+Pipe.xs
+README.md
+lib/Sys/Pipe.pm
+t/pipe_nonblock.t

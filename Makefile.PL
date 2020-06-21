@@ -1,5 +1,13 @@
 use ExtUtils::MakeMaker;
 
+use Config;
+
+my $d_pipe = $Config{'d_pipe'};
+
+if (!$d_pipe) {
+    die "OS unsupported (\$Config{d_pipe} == $d_pipe)";
+}
+
 WriteMakefile(
     NAME           => 'Sys::Pipe',
     VERSION_FROM   => 'lib/Sys/Pipe.pm',

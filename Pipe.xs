@@ -9,31 +9,28 @@
 
 #include <stdbool.h>
 
+// CopSTASH may not be part of the API … but PL_curstash doesn’t
+// work with “perl -e'package Foo; _print_pl_curstash()'”, whereas
+// PL_curcop does.
+#define SP_CUR_STASH ( (HV*)CopSTASH(PL_curcop) )
+
+#define SP_CUR_PKGNAME HvNAME( SP_CUR_STASH )
+
 // For now depend on Perl’s HAS_PIPE2
 
 //#include "ppport.h"
 
 //----------------------------------------------------------------------
 
-static inline char* _cur_pkgname( pTHX ) {
-    COP* mycop = PL_curcop;
-
-    // This macro may not be part of the API … but PL_curstash doesn’t
-    // work with “perl -e'package Foo; _print_pl_curstash()'”, whereas
-    // PL_curcop does.
-    HV* myhv = (HV*)CopSTASH(mycop);
-
-    return HvNAME(myhv);
-}
-
 static inline void _fd2sv( pTHX_ int fd, bool is_read, SV* sv ) {
     PerlIO *pio = PerlIO_fdopen(fd, is_read ? "r" : "w");
 
-    GV* gv = newGVgen( _cur_pkgname(aTHX) );
+    GV* gv = newGVgen( SP_CUR_PKGNAME );
+    IO* io = GvIOn(gv);
+
     SvUPGRADE(sv, SVt_IV);
     SvROK_on(sv);
     SvRV_set(sv, (SV*)gv);
-    IO* io = GvIOn(gv);
 
     IoTYPE(io) = is_read ? '<' : '>';
     IoIFP(io) = pio;
@@ -52,15 +49,14 @@ int _sp_pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
 
     int ret = pipe(fds);
 #else
-    croak("This system lacks pipe support!");
+    assert(0);
 #endif
 
     if (!ret) {
-/*
-        if (fds[0] > PL_maxsysfd) {
-            fcntl(fds[0], F_SETFD, FD_CLOEXEC);
-        }
-*/
+
+        // These don’t seem to be available to extensions,
+        // but apparently they’re unneeded anyway.
+        //
         // Perl_setfd_cloexec_for_nonsysfd(fds[0]);
         // Perl_setfd_cloexec_for_nonsysfd(fds[1]);
 
