@@ -32,6 +32,11 @@ In Linux, this also exposes the ability to create a “packet mode” pipe.
 Other OSes may allow other functionality. See your system’s [pipe2(2)](http://man.he.net/man2/pipe2)
 for more details.
 
+# STATUS
+
+This module is best considered **EXPERIMENTAL**. If you find a problem,
+please file a bug report. Thank you!
+
 # SEE ALSO
 
 [socket()](https://metacpan.org/pod/perlfunc#socket) allows similar functionality on the

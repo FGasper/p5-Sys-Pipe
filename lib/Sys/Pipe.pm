@@ -39,6 +39,11 @@ In Linux, this also exposes the ability to create a “packet mode” pipe.
 Other OSes may allow other functionality. See your system’s L<pipe2(2)>
 for more details.
 
+=head1 STATUS
+
+This module is best considered B<EXPERIMENTAL>. If you find a problem,
+please file a bug report. Thank you!
+
 =head1 SEE ALSO
 
 L<socket()|perlfunc/"socket"> allows similar functionality on the

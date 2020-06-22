@@ -11,6 +11,8 @@ use Sys::Pipe;
 use Errno;
 use Fcntl;
 
+use IO::File;
+
 SKIP: {
     my ($r, $w);
 
