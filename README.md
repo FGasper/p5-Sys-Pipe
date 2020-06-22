@@ -39,8 +39,8 @@ please file a bug report. Thank you!
 
 # SEE ALSO
 
-[socket()](https://metacpan.org/pod/perlfunc#socket-SOCKET-DOMAIN-TYPE-PROTOCOL) allows
-similar functionality on the relevant OSes, e.g.:
+Perl’s [socket()](https://metacpan.org/pod/perlfunc#socket-SOCKET-DOMAIN-TYPE-PROTOCOL)
+built-in allows similar functionality on the relevant OSes, e.g.:
 
     use Socket;
 
@@ -59,6 +59,11 @@ documentation for what values you can pass in there.
 Note that behavior is currently **undefined** if _FLAGS_ is nonzero on
 any system (e.g., macOS) that lacks `pipe2()`. (As of this writing an
 exception is thrown; that may change eventually.)
+
+## $yn = has\_pipe2()
+
+Returns a boolean that indicates whether the underlying system can
+implement `pipe2()` mechanics.
 
 # COPYRIGHT
 

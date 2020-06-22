@@ -71,6 +71,16 @@ MODULE = Sys::Pipe          PACKAGE = Sys::Pipe
 
 PROTOTYPES: DISABLE
 
+BOOT:
+    HV *stash = gv_stashpv("Sys::Pipe", FALSE);
+    newCONSTSUB(stash, "has_pipe2", newSVuv(
+#if SP_HAS_PIPE2
+        1
+#else
+        0
+#endif
+    ));
+
 SV*
 pipe( SV *infh, SV *outfh, int flags = 0 )
     CODE:

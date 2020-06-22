@@ -74,9 +74,14 @@ our ($VERSION);
 use XSLoader ();
 
 BEGIN {
-    $VERSION = '0.01_01';
+    $VERSION = '0.01';
     XSLoader::load();
 }
+
+=head2 $yn = has_pipe2()
+
+Returns a boolean that indicates whether the underlying system can
+implement C<pipe2()> mechanics.
 
 =head1 COPYRIGHT
 

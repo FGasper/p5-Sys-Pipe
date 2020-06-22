@@ -14,11 +14,9 @@ use Fcntl;
 use IO::File;
 
 SKIP: {
-    my ($r, $w);
+    skip "No pipe2 support (OS = $^O)", 1 if !Sys::Pipe::has_pipe2();
 
-    eval { Sys::Pipe::pipe( $r, $w, Fcntl::O_NONBLOCK() ) } or do {
-        skip "No pipe2 support? $@", 1;
-    };
+    Sys::Pipe::pipe( my ($r, $w), Fcntl::O_NONBLOCK() ) or die "pipe(): $!";
 
     ok( !$r->blocking(), 'non-blocking from the get-go' );
 }
