@@ -46,8 +46,8 @@ please file a bug report. Thank you!
 
 =head1 SEE ALSO
 
-L<socket()|perlfunc/"socket-SOCKET,DOMAIN,TYPE,PROTOCOL"> allows
-similar functionality on the relevant OSes, e.g.:
+Perl’s L<socket()|perlfunc/"socket-SOCKET,DOMAIN,TYPE,PROTOCOL">
+built-in allows similar functionality on the relevant OSes, e.g.:
 
     use Socket;
 
