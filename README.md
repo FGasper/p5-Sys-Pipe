@@ -32,6 +32,17 @@ In Linux, this also exposes the ability to create a “packet mode” pipe.
 Other OSes may allow other functionality. See your system’s [pipe2(2)](http://man.he.net/man2/pipe2)
 for more details.
 
+# SEE ALSO
+
+[socket()](https://metacpan.org/pod/perlfunc#socket) allows similar functionality on the
+relevant OSes, e.g.:
+
+    use Socket;
+
+    socket( my $s, AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0 ) or do {
+        die "socket(): $!";
+    };
+
 # FUNCTIONS
 
 ## $success\_yn = pipe( READHANDLE, WRITEHANDLE \[, FLAGS\] )

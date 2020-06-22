@@ -39,6 +39,17 @@ In Linux, this also exposes the ability to create a “packet mode” pipe.
 Other OSes may allow other functionality. See your system’s L<pipe2(2)>
 for more details.
 
+=head1 SEE ALSO
+
+L<socket()|perlfunc/"socket"> allows similar functionality on the
+relevant OSes, e.g.:
+
+    use Socket;
+
+    socket( my $s, AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0 ) or do {
+        die "socket(): $!";
+    };
+
 =head1 FUNCTIONS
 
 =head2 $success_yn = pipe( READHANDLE, WRITEHANDLE [, FLAGS] )

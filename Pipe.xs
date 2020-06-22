@@ -9,9 +9,9 @@
 
 #include <stdbool.h>
 
-// CopSTASH may not be part of the API … but PL_curstash doesn’t
-// work with “perl -e'package Foo; _print_pl_curstash()'”, whereas
-// PL_curcop does.
+// CopSTASH isn’t documented as part of the API but is heavily used
+// on CPAN. There is PL_curstash, but that doesn’t work with, e.g.,
+// “perl -e'package Foo; _print_pl_curstash()'”, whereas PL_curcop does.
 #define SP_CUR_STASH ( (HV*)CopSTASH(PL_curcop) )
 
 #define SP_CUR_PKGNAME HvNAME( SP_CUR_STASH )
@@ -40,16 +40,14 @@ static inline void _fd2sv( pTHX_ int fd, bool is_read, SV* sv ) {
 int _sp_pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
     int fds[2];
 
-#ifdef HAS_PIPE2
+#ifdef SP_HAS_PIPE2
     int ret = pipe2(fds, flags);
-#elif defined(HAS_PIPE)
+#else
     if (flags != 0) {
         croak("This system lacks pipe2 support, so pipe() cannot accept flags.");
     }
 
     int ret = pipe(fds);
-#else
-    assert(0);
 #endif
 
     if (!ret) {
