@@ -80,14 +80,14 @@ END
 
     my $cmd = "$ccpath -Wall $cpath -o $progpath";
 
-    # print "Compiling test program: `$cmd`\n";
+    print "Checking to see if your system has pipe2 …$/";
     system($cmd);
 
     if ( -s $progpath ) {
-        print "Looks like you have pipe2. Cool!$/";
+        print "Looks like your system has pipe2. Cool!$/";
         return 1;
     }
 
-    print "Looks like you lack pipe2 … :($/";
+    print "Looks like your system lacks pipe2 … :($/";
     return 0;
 }
