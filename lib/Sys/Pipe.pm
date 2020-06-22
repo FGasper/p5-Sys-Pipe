@@ -36,8 +36,8 @@ tidiness. It I<is> also faster than doing:
 difference for you.
 
 In Linux, this also exposes the ability to create a “packet mode” pipe.
-Other OSes may allow other functionality. See your system’s L<pipe2(2)>
-for more details.
+Other OSes may allow similar and/or other functionality. See your
+system’s L<pipe2(2)> for more details.
 
 =head1 STATUS
 
@@ -46,8 +46,8 @@ please file a bug report. Thank you!
 
 =head1 SEE ALSO
 
-L<socket()|perlfunc/"socket"> allows similar functionality on the
-relevant OSes, e.g.:
+L<socket()|perlfunc/"socket-SOCKET,DOMAIN,TYPE,PROTOCOL"> allows
+similar functionality on the relevant OSes, e.g.:
 
     use Socket;
 
