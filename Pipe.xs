@@ -16,8 +16,6 @@
 
 #define SP_CUR_PKGNAME HvNAME( SP_CUR_STASH )
 
-// For now depend on Perl’s HAS_PIPE2
-
 //#include "ppport.h"
 
 //----------------------------------------------------------------------
@@ -40,6 +38,7 @@ static inline void _fd2sv( pTHX_ int fd, bool is_read, SV* sv ) {
 int _sp_pipe( pTHX_ SV* infh, SV* outfh, int flags ) {
     int fds[2];
 
+// This macro comes from Makefile.PL:
 #ifdef SP_HAS_PIPE2
     int ret = pipe2(fds, flags);
 #else
