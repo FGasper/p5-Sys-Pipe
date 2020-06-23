@@ -31,6 +31,8 @@ WriteMakefile(
         'XSLoader' => 0.14,
     },
 
+    MIN_PERL_VERSION => '5.8.8',
+
     TEST_REQUIRES => {
         'Test::More' => 0,
         'Test::FailWarnings' => 0,
