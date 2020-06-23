@@ -4,6 +4,8 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#include "ppport.h"
+
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -15,8 +17,6 @@
 #define SP_CUR_STASH ( (HV*)CopSTASH(PL_curcop) )
 
 #define SP_CUR_PKGNAME HvNAME( SP_CUR_STASH )
-
-#include "ppport.h"
 
 //----------------------------------------------------------------------
 
