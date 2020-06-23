@@ -13,6 +13,10 @@ if (!$d_pipe) {
 
 my $has_pipe2 = _has_pipe2();
 
+use Devel::PPPort;
+
+Devel::PPPort::WriteFile();
+
 WriteMakefile(
     NAME           => 'Sys::Pipe',
     VERSION_FROM   => 'lib/Sys/Pipe.pm',
@@ -29,6 +33,10 @@ WriteMakefile(
 
     PREREQ_PM => {
         'XSLoader' => 0.14,
+    },
+
+    CONFIGURE_REQUIRES => {
+        'Devel::PPPort' => 0,
     },
 
     TEST_REQUIRES => {

@@ -16,7 +16,7 @@
 
 #define SP_CUR_PKGNAME HvNAME( SP_CUR_STASH )
 
-//#include "ppport.h"
+#include "ppport.h"
 
 //----------------------------------------------------------------------
 
