@@ -13,16 +13,20 @@ use Fcntl;
 
 use IO::File;
 
-{
-    Sys::Pipe::pipe( my ($r, $w), 0 ) or die "pipe(): $!";
+SKIP: {
+    skip 'Windows and pipe() don’t mix.', 2 if $^O eq 'MSWin32';
 
-    ok( $r->blocking(), 'flags=0: blocking from the get-go' );
-}
+    {
+        Sys::Pipe::pipe( my ($r, $w), 0 ) or die "pipe(): $!";
 
-{
-    Sys::Pipe::pipe( my ($r, $w) ) or die "pipe(): $!";
+        ok( $r->blocking(), 'flags=0: blocking from the get-go' );
+    }
 
-    ok( $r->blocking(), 'no flags: blocking from the get-go' );
+    {
+        Sys::Pipe::pipe( my ($r, $w) ) or die "pipe(): $!";
+
+        ok( $r->blocking(), 'no flags: blocking from the get-go' );
+    }
 }
 
 done_testing();
